@@ -1,0 +1,33 @@
+{
+  "dependencies": {
+    "antd": "^5.3.3",
+    "bcrypt": "^5.1.0",
+    "cloudinary": "^1.35.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongodb": "^4.13.0",
+    "mongoose": "^6.8.1",
+    "mongoose-aggregate-paginate-v2": "^1.0.6",
+    "nodemailer": "^6.9.1",
+    "nodemon": "^2.0.22",
+    "react-router-dom": "^6.10.0",
+    "react-social-icons": "^5.15.0",
+    "validator": "^13.7.0"
+  },
+  "name": "comsats_alumni_site",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.js",
+    "client": "npm start --prefix client",
+    "server": "nodemon server/server.js",
+    "npm-install-scripts": "npm install --prefix client && npm install",
+    "dev": "concurrently \"npm run server\" \"npm run client\" "
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
