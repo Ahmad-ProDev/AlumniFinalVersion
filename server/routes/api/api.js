@@ -144,6 +144,7 @@ router.route("/getstatistics").get(async (req, res) => {
     const departmentStats = [];
     const batchStats = [];
     const employedStats = [{ name: 'employed', value: 0 }, { name: 'unemployed', value: 0 }];
+    const registeredStats = [{ name: 'registered', value: 0 }, { name: 'unregistered', value: 0 }];
 
     for (let user of allUsers) {
 
@@ -182,15 +183,89 @@ router.route("/getstatistics").get(async (req, res) => {
       }
 
       // EMPLOYED STATS
-      if (user.isEmployed) {
-        employedStats[0].value++;
-      } else {
-        employedStats[1].value++;
+      if(user.supervisorName){
+
+        if (user.isEmployed)  {
+          employedStats[0].value++;
+        } else {
+          employedStats[1].value++;
+        }
       }
+      // EMPLOYED STATS
+      if(user.supervisorName){
+
+          registeredStats[0].value++;
+        } else {
+          registeredStats[1].value++;
+        }
+      
     }
+    
+    const countryCount = [];
+
+  for (let i = 0; i < allUsers.length; i++) {
+    if(allUsers[i].supervisorName){
+      const country = allUsers[i].countryName;
+      if (countryCount.hasOwnProperty(country)) {
+        countryCount[country]++;
+      } else {
+        countryCount[country] = 1;
+      }
+      
+    }
+  }
+
+  const Countryresult = [];
+
+  for (const country in countryCount) {
+    
+    Countryresult.push({ name: country, count: countryCount[country] });
+  }
 
 
-    return res.status(200).json({ departmentStats, batchStats, employedStats });
+  const supervisorPositionCount = {};
+
+  for (let i = 0; i < allUsers.length; i++) {
+    if(allUsers[i].supervisorName){
+    
+    const position = allUsers[i].supervisorPosition;
+
+    if (supervisorPositionCount.hasOwnProperty(position)) {
+      supervisorPositionCount[position]++;
+    } else {
+      supervisorPositionCount[position] = 1;
+    }
+  }
+  }
+
+  const supervisorPositionCountResult = [];
+
+  for (const position in supervisorPositionCount) {
+    supervisorPositionCountResult.push({ position: position, count: supervisorPositionCount[position] });
+  }
+
+  const sectorCount = [];
+
+  for (let i = 0; i < allUsers.length; i++) {
+    if(allUsers[i].supervisorName){
+    
+    const sector = allUsers[i].sector;
+
+    if (sectorCount.hasOwnProperty(sector)) {
+      sectorCount[sector]++;
+    } else {
+      sectorCount[sector] = 1;
+    }
+  }
+  }
+
+  const sectorCountResult = [];
+
+  for (const sector in sectorCount) {
+    sectorCountResult.push({ sector: sector, count: sectorCount[sector] });
+  }
+
+    return res.status(200).json({ departmentStats, batchStats, employedStats, Countryresult, supervisorPositionCountResult, sectorCountResult, registeredStats });
 
   } catch (error) {
     console.log(error)
@@ -305,7 +380,16 @@ router.route("/getalumni/:pageno").get(async (req, res) => {
     const alumnis = await User.aggregatePaginate(myAggregate, { page: req.params.pageno || 1, limit: 10 })
     // const alumnis = await User.find();
 
-    return res.status(200).json(alumnis);
+    console.log(alumnis);
+
+    registeredAlumnis = alumnis.docs.filter((user) =>
+      user.supervisorName !== null &&  user.supervisorName !== undefined && user.supervisorName !== ""
+    )
+
+    return res.status(200).json({
+      ...alumnis,
+      docs: registeredAlumnis,
+    });
 
   } catch (error) {
     console.log(error)

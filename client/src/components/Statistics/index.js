@@ -32,7 +32,10 @@ const Statistics = () => {
           setStatisticsData(res.data);
         });
     }
+    
   }, []);
+
+
 
   return (
     <Styled.Section>
@@ -42,6 +45,33 @@ const Statistics = () => {
 
       <Styled.GraphsContainer>
 
+        <Styled.Graph>
+          <Styled.GraphTitle>
+            Registered Stats
+          </Styled.GraphTitle>
+          {statisticsData && (
+            <BarChart
+              width={500}
+              height={300}
+              data={statisticsData.registeredStats}
+              margin={{
+                top: 20,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="value" label={{ position: 'top' }}>
+                <Cell key={`cell-0`} fill={'#8884d8'} />
+                <Cell key={`cell-1`} fill={'#82ca9d'} />
+              </Bar>
+            </BarChart>
+          )}
+        </Styled.Graph>
         <Styled.Graph>
           <Styled.GraphTitle>
             Employement Rate
@@ -115,6 +145,81 @@ const Statistics = () => {
                   label
                 >
                   {statisticsData.departmentStats.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+
+                <Tooltip />
+              </PieChart>
+            )
+          }
+        </Styled.Graph>
+        <Styled.Graph>
+          <Styled.GraphTitle>
+            Country Stats
+          </Styled.GraphTitle>
+          {
+            statisticsData && (
+              <PieChart width={400} height={300}>
+                <Pie
+                  dataKey="count"
+                  startAngle={360}
+                  endAngle={0}
+                  data={statisticsData.Countryresult}
+                  fill="#8884d8"
+                  label
+                >
+                  {statisticsData.Countryresult.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+
+                <Tooltip />
+              </PieChart>
+            )
+          }
+        </Styled.Graph>
+        <Styled.Graph>
+          <Styled.GraphTitle>
+            Supervisor Position Stats
+          </Styled.GraphTitle>
+          {
+            statisticsData && (
+              <PieChart width={400} height={300}>
+                <Pie
+                  dataKey="count"
+                  startAngle={360}
+                  endAngle={0}
+                  data={statisticsData.supervisorPositionCountResult}
+                  fill="#8884d8"
+                  label
+                >
+                  {statisticsData.supervisorPositionCountResult.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+
+                <Tooltip />
+              </PieChart>
+            )
+          }
+        </Styled.Graph>
+        <Styled.Graph>
+          <Styled.GraphTitle>
+            Sector Stats
+          </Styled.GraphTitle>
+          {
+            statisticsData && (
+              <PieChart width={400} height={300}>
+                <Pie
+                  dataKey="count"
+                  startAngle={360}
+                  endAngle={0}
+                  data={statisticsData.sectorCountResult}
+                  fill="#8884d8"
+                  label="Sector"
+                                  >
+                  {statisticsData.sectorCountResult.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>

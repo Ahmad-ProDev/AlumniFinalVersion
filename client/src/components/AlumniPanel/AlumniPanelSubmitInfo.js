@@ -25,6 +25,10 @@ const AlumniPanelSubmitInfo = () => {
   const [isDepartmentDropboxVisible, setDepartmentDropboxVisible] = useState(false);
   const [isEmployedDropboxVisible, setIsEmployedDropboxVisible] = useState(false);
   const [isBatchesDropboxVisible, setBatchesDropboxVisible] = useState(false);
+  const [isSectorDropboxVisible, setIsSectorDropboxVisible] = useState(false);
+  const [isSupervisorPositionDropboxVisible, setIssupervisorPositionDropboxVisible] = useState(false);
+  const [isCountryDropboxVisible, setIsCountryDropboxVisible] = useState(false);
+
 
   const [name, setName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
@@ -121,15 +125,15 @@ const AlumniPanelSubmitInfo = () => {
     }
     // departmentRef.current.value = alumniData.department;
     emailRef.current.value = alumniData.email;
-    sectorRef.current.value = alumniData.sector;
+    // sectorRef.current.value = alumniData.sector;
     supervisorNameRef.current.value = alumniData.supervisorName;
     officeEmailRef.current.value = alumniData.officeEmail;
     // graduationYearRef.current.value = alumniData.graduationYear;
     positionHeldRef.current.value = alumniData.positionHeld;
     // dateOfJoiningRef.current.value = alumniData.dateOfJoining;
     organizationNameRef.current.value = alumniData.organizationName;
-    supervisorPositionRef.current.value = alumniData.supervisorPosition;
-    countryNameRef.current.value = alumniData.countryName;
+    // supervisorPositionRef.current.value = alumniData.supervisorPosition;
+    // countryNameRef.current.value = alumniData.countryName;
     registrationNumberRef.current.value = alumniData.registrationNumber;
 
 
@@ -182,7 +186,7 @@ const AlumniPanelSubmitInfo = () => {
         <StyledAlumni.StyledAdminPanelInputGroupContainer>
           <StyledAlumni.StyledAdminPanelInputGroup>
             <label>Registration Number</label>
-            <StyledAlumni.StyledAdminPanelInputText  disabled type='text' ref={registrationNumberRef} placeholder='Enter registration number' />
+            <StyledAlumni.StyledAdminPanelInputText disabled type='text' ref={registrationNumberRef} placeholder='Enter registration number' />
           </StyledAlumni.StyledAdminPanelInputGroup>
 
           <StyledAlumni.StyledAdminPanelInputGroup>
@@ -196,7 +200,7 @@ const AlumniPanelSubmitInfo = () => {
         <StyledAlumni.StyledAdminPanelInputGroupContainer>
           <StyledAlumni.StyledAdminPanelInputGroup>
             <label>Department</label>
-            
+
             <StyledAlumni.StyledAlumniDropbox>
               <StyledAlumni.StyledAlumniDropboxContent >
                 <p>{department}</p>
@@ -237,6 +241,54 @@ const AlumniPanelSubmitInfo = () => {
 
             </StyledAlumni.StyledAlumniDropbox>
           </StyledAlumni.StyledAdminPanelInputGroup>
+        </StyledAlumni.StyledAdminPanelInputGroupContainer>
+
+        <StyledAlumni.StyledAdminPanelInputGroupContainer>
+          <StyledAlumni.StyledAdminPanelInputGroup>
+            <label>Supervisor Name</label>
+            <StyledAlumni.StyledAdminPanelInputText type='text' required ref={supervisorNameRef} placeholder='Enter supervisor name' onChange={e => setSupervisorName(e.currentTarget.value)} />
+          </StyledAlumni.StyledAdminPanelInputGroup>
+
+          <StyledAlumni.StyledAdminPanelInputGroup>
+            <label>Supervisor Position</label>
+
+            <StyledAlumni.StyledAlumniDropbox width='55rem'>
+              <StyledAlumni.StyledAlumniDropboxContent onClick={() => setIssupervisorPositionDropboxVisible(!isSupervisorPositionDropboxVisible)}>
+                <p>{supervisorPosition ? supervisorPosition : "Select"}</p>
+                <span>
+                  <AiOutlineDown />
+                </span>
+              </StyledAlumni.StyledAlumniDropboxContent>
+              {
+                isSupervisorPositionDropboxVisible && <StyledAlumni.StyledAlumniDropboxOptions>
+                  <ul>
+                    <li onClick={() => {
+                      setIssupervisorPositionDropboxVisible(false)
+                      setSupervisorPosition("Lecturer")
+                    }
+                    }>Lecturer</li>
+                    <li onClick={() => {
+                      setIssupervisorPositionDropboxVisible(false)
+                      setSupervisorPosition("Assistant Professor")
+                    }
+                    }>Assistant Professor</li>
+                    <li onClick={() => {
+                      setIssupervisorPositionDropboxVisible(false)
+                      setSupervisorPosition("Associate Professor")
+                    }
+                    }>Associate Professor</li>
+                    <li onClick={() => {
+                      setIssupervisorPositionDropboxVisible(false)
+                      setSupervisorPosition("Professor")
+                    }
+                    }>Professor</li>
+                  </ul>
+                </StyledAlumni.StyledAlumniDropboxOptions>
+              }
+
+            </StyledAlumni.StyledAlumniDropbox>
+            </StyledAlumni.StyledAdminPanelInputGroup>
+
         </StyledAlumni.StyledAdminPanelInputGroupContainer>
 
         <StyledAlumni.StyledAdminPanelInputGroupContainer>
@@ -289,7 +341,41 @@ const AlumniPanelSubmitInfo = () => {
         <StyledAlumni.StyledAdminPanelInputGroupContainer isEmployed={isEmployed}>
           <StyledAlumni.StyledAdminPanelInputGroup>
             <label>Sector</label>
-            <StyledAlumni.StyledAdminPanelInputText type='text' ref={sectorRef} placeholder='Enter sector' onChange={e => setSector(e.currentTarget.value)} />
+
+            <StyledAlumni.StyledAlumniDropbox width='55rem'>
+              <StyledAlumni.StyledAlumniDropboxContent onClick={() => setIsSectorDropboxVisible(!isSectorDropboxVisible)}>
+                <p>{sector ? sector : "Select"}</p>
+                <span>
+                  <AiOutlineDown />
+                </span>
+              </StyledAlumni.StyledAlumniDropboxContent>
+              {
+                isSectorDropboxVisible && <StyledAlumni.StyledAlumniDropboxOptions>
+                  <ul>
+                    <li onClick={() => {
+                      setIsSectorDropboxVisible(false)
+                      setSector("Government")
+                    }
+                    }>Government</li>
+                    <li onClick={() => {
+                      setIsSectorDropboxVisible(false)
+                      setSector("Semi-Government")
+                    }
+                    }>Semi-Government</li>
+                    <li onClick={() => {
+                      setIsSectorDropboxVisible(false)
+                      setSector("Private")
+                    }
+                    }>Private</li>
+                    
+
+                  </ul>
+                </StyledAlumni.StyledAlumniDropboxOptions>
+              }
+
+            </StyledAlumni.StyledAlumniDropbox>
+
+            {/* <StyledAlumni.StyledAdminPanelInputText type='text' ref={departmentRef} placeholder='Enter department' onChange={e => setDepartment(e.currentTarget.value)} /> */}
           </StyledAlumni.StyledAdminPanelInputGroup>
 
           <StyledAlumni.StyledAdminPanelInputGroup>
@@ -301,28 +387,72 @@ const AlumniPanelSubmitInfo = () => {
 
         <StyledAlumni.StyledAdminPanelInputGroupContainer isEmployed={isEmployed}>
           <StyledAlumni.StyledAdminPanelInputGroup>
-            <label>Supervisor Name</label>
-            <StyledAlumni.StyledAdminPanelInputText type='text' ref={supervisorNameRef} placeholder='Enter supervisor name' onChange={e => setSupervisorName(e.currentTarget.value)} />
-          </StyledAlumni.StyledAdminPanelInputGroup>
-
-          <StyledAlumni.StyledAdminPanelInputGroup>
-            <label>Supervisor Position</label>
-            <StyledAlumni.StyledAdminPanelInputText type='text' ref={supervisorPositionRef} placeholder='Enter supervisor position' onChange={e => setSupervisorPosition(e.currentTarget.value)} />
-          </StyledAlumni.StyledAdminPanelInputGroup>
-        </StyledAlumni.StyledAdminPanelInputGroupContainer>
-
-        <StyledAlumni.StyledAdminPanelInputGroupContainer isEmployed={isEmployed}>
-          <StyledAlumni.StyledAdminPanelInputGroup>
             <label>Office Email</label>
             <StyledAlumni.StyledAdminPanelInputText type='email' ref={officeEmailRef} placeholder='Enter office email' onChange={e => setOfficeEmail(e.currentTarget.value)} />
           </StyledAlumni.StyledAdminPanelInputGroup>
 
-          <StyledAlumni.StyledAdminPanelInputGroup>
+          {/* <StyledAlumni.StyledAdminPanelInputGroup>
             <label>Country Name</label>
             <StyledAlumni.StyledAdminPanelInputText type='text' ref={countryNameRef} placeholder='Enter country name' onChange={e => setCountryName(e.currentTarget.value)} />
+          </StyledAlumni.StyledAdminPanelInputGroup> */}
+
+        <StyledAlumni.StyledAdminPanelInputGroup>
+            <label>Region Name</label>
+
+            <StyledAlumni.StyledAlumniDropbox width='55rem'>
+              <StyledAlumni.StyledAlumniDropboxContent onClick={() => setIsCountryDropboxVisible(!isCountryDropboxVisible)}>
+                <p>{countryName ? countryName : "Select"}</p>
+                <span>
+                  <AiOutlineDown />
+                </span>
+              </StyledAlumni.StyledAlumniDropboxContent>
+              {
+                isCountryDropboxVisible && <StyledAlumni.StyledAlumniDropboxOptions>
+                  <ul>
+                    <li onClick={() => {
+                      setIsCountryDropboxVisible(false);
+                      setCountryName("Pakistan")
+                    }
+                  }>Pakistan</li>
+                  <li onClick={() => {
+                      setIsCountryDropboxVisible(false);
+                      setCountryName("Asia (Other Than Pakistan)")
+                    }
+                  }>Asia (Other Than Pakistan)</li>
+                  <li onClick={() => {
+                      setIsCountryDropboxVisible(false);
+                      setCountryName("Africa")
+                    }
+                  }>Africa</li>
+                  <li onClick={() => {
+                      setIsCountryDropboxVisible(false);
+                      setCountryName("North America")
+                    }
+                  }>North America</li>
+                    <li onClick={() => {
+                      setIsCountryDropboxVisible(false);
+                      setCountryName("South America")
+                    }
+                  }>South America</li>         
+                    <li onClick={() => {
+                      setIsCountryDropboxVisible(false);
+                      setCountryName("Europe")
+                    }
+                  }>Europe</li>                           
+                    <li onClick={() => {
+                      setIsCountryDropboxVisible(false);
+                      setCountryName("Australia")
+                    }
+                  }>Australia</li>                  
+                  </ul>
+                </StyledAlumni.StyledAlumniDropboxOptions>
+              }
+
+            </StyledAlumni.StyledAlumniDropbox>
+
+            {/* <StyledAlumni.StyledAdminPanelInputText type='text' ref={departmentRef} placeholder='Enter department' onChange={e => setDepartment(e.currentTarget.value)} /> */}
           </StyledAlumni.StyledAdminPanelInputGroup>
         </StyledAlumni.StyledAdminPanelInputGroupContainer>
-
 
 
 
