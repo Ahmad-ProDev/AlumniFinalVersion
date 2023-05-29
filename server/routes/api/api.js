@@ -191,7 +191,7 @@ router.route("/getstatistics").get(async (req, res) => {
           employedStats[1].value++;
         }
       }
-      // EMPLOYED STATS
+      // Registered STATS
       if(user.supervisorName){
 
           registeredStats[0].value++;
@@ -200,7 +200,7 @@ router.route("/getstatistics").get(async (req, res) => {
         }
       
     }
-    
+    // Country Count STATS
     const countryCount = [];
 
   for (let i = 0; i < allUsers.length; i++) {
@@ -222,7 +222,7 @@ router.route("/getstatistics").get(async (req, res) => {
     Countryresult.push({ name: country, count: countryCount[country] });
   }
 
-
+    // Supervisor Position STATS
   const supervisorPositionCount = {};
 
   for (let i = 0; i < allUsers.length; i++) {
@@ -244,6 +244,7 @@ router.route("/getstatistics").get(async (req, res) => {
     supervisorPositionCountResult.push({ position: position, count: supervisorPositionCount[position] });
   }
 
+   // Sector Count STATS
   const sectorCount = [];
 
   for (let i = 0; i < allUsers.length; i++) {
